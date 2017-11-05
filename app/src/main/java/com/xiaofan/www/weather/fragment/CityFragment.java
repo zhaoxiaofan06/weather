@@ -15,9 +15,9 @@ import android.widget.ProgressBar;
 
 import com.xiaofan.www.weather.MainActivity;
 import com.xiaofan.www.weather.R;
-import com.xiaofan.www.weather.adapter.ProvinceListAdapter;
+import com.xiaofan.www.weather.adapter.CityListAdapter;
 import com.xiaofan.www.weather.common.RestClient;
-import com.xiaofan.www.weather.model.Province;
+import com.xiaofan.www.weather.model.City;
 
 import java.util.ArrayList;
 
@@ -28,20 +28,29 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProvinceFragment extends Fragment {
+public class CityFragment extends Fragment {
     private View view;
     private MainActivity mainActivity;
-    private ArrayList<Province> provinceList;
+    private ArrayList<City> cityList;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
-    private ProvinceListAdapter adapter;
+    private CityListAdapter adapter;
     private ProgressBar progressBar;
     private LinearLayout progress_wrap;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private String city_id;
+    private String city_name;
 
-
-    public ProvinceFragment() {
+    public CityFragment() {
         // Required empty public constructor
+    }
+
+    public void setCityId(String city_id){
+        this.city_id=city_id;
+    }
+
+    public void setCityName(String city_name){
+        this.city_name=city_name;
     }
 
     @Override
@@ -51,7 +60,7 @@ public class ProvinceFragment extends Fragment {
         mainActivity=(MainActivity) getActivity();
         mainActivity.toolbar.setTitle("");
         mainActivity.toolbar.setTitleTextColor(Color.WHITE);
-        mainActivity.title.setText("中国");
+        mainActivity.title.setText(city_name);
 
         progress_wrap=(LinearLayout)view.findViewById(R.id.progress_wrap);
         progress_wrap.setVisibility(View.VISIBLE);
@@ -69,8 +78,8 @@ public class ProvinceFragment extends Fragment {
         recyclerView=(RecyclerView)view.findViewById(R.id.recycler_view);
         layoutManager=new LinearLayoutManager(mainActivity);
         recyclerView.setLayoutManager(layoutManager);
-        adapter=new ProvinceListAdapter();
-        adapter.setProvinceListAdapter(new ArrayList<Province>());
+        adapter=new CityListAdapter();
+        adapter.setCityListAdapter(new ArrayList<City>());
         recyclerView.setAdapter(adapter);
 
         flushData();
@@ -80,19 +89,16 @@ public class ProvinceFragment extends Fragment {
     public void flushData(){
         String url=mainActivity.getResources().getString(R.string.api_url);
         RestClient client= RestClient.getDedault(url);
-        Call<ArrayList<Province>> call=client.getProvinceList();
-        call.enqueue(new Callback<ArrayList<Province>>(){
+        Call<ArrayList<City>> call=client.getCityList(city_id);
+        call.enqueue(new Callback<ArrayList<City>>(){
             @Override
-            public void onResponse(Call<ArrayList<Province>> call, Response<ArrayList<Province>> response){
+            public void onResponse(Call<ArrayList<City>> call, Response<ArrayList<City>> response){
                 try{
                     int code=response.code();
                     switch (code){
                         case 200:
-                            provinceList=response.body();
-                            //Gson gson=new Gson();
-                            //Log.d("中国",gson.toJson(provinceList));
-
-                            adapter.setProvinceListAdapter(provinceList);
+                            cityList=response.body();
+                            adapter.setCityListAdapter(cityList);
                             recyclerView.setAdapter(adapter);
                             break;
                     }
@@ -103,7 +109,7 @@ public class ProvinceFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Province>> call,Throwable t){
+            public void onFailure(Call<ArrayList<City>> call,Throwable t){
                 t.printStackTrace();
             }
         });

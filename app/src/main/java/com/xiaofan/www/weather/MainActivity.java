@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         subscription.clear();
     }
 
-    private void replaceFragmnet(Fragment fragment){
+    public void replaceFragmnet(Fragment fragment){
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction transaction=fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_id,fragment);

@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.xiaofan.www.weather.model.City;
 import com.xiaofan.www.weather.model.Province;
 
 import java.util.ArrayList;
@@ -54,4 +55,9 @@ public class RestClient {
     public Call<ArrayList<Province>> getProvinceList(){
         return serviceInterface.getProvinceList();
     }
+
+    public Call<ArrayList<City>> getCityList(String id){
+        return serviceInterface.getCityList(id);
+    }
+
 }

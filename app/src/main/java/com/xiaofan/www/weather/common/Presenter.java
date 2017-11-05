@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.widget.Toast;
 
 import com.xiaofan.www.weather.MainActivity;
+import com.xiaofan.www.weather.fragment.CityFragment;
+import com.xiaofan.www.weather.model.Province;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -37,8 +40,12 @@ public class Presenter {
                         public void call(Object event){
                             if (event instanceof WeatherEvent) {
                                 WeatherEvent e=(WeatherEvent)event;
-                                if(e.getType()==WeatherEvent.Type.GOTO_WEATHER_PROVINCE) {
-
+                                if(e.getType()==WeatherEvent.Type.GOTO_WEATHER_CITY) {
+                                    Province province=(Province)e.getObject();
+                                    CityFragment cityFragment=new CityFragment();
+                                    cityFragment.setCityId(province.getId()+"");
+                                    cityFragment.setCityName(province.getName());
+                                    mainActivity.replaceFragmnet(cityFragment);
                                 }
                             }
                         }

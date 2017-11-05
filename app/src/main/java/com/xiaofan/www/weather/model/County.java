@@ -4,11 +4,11 @@ package com.xiaofan.www.weather.model;
  * Created by think on 2017/11/5.
  */
 
-public class Province {
+public class County {
     private int id;
     private String name;
+    private String weather_id;
     public int getId(){return id;}
     public String getName(){return name;}
-    public void setId(int id){this.id=id;}
-    public void setName(String name){this.name=name;}
+    public String getWeatherId(){return weather_id;}
 }

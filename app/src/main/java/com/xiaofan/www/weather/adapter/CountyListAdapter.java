@@ -18,13 +18,12 @@ import java.util.ArrayList;
  * Created by think on 2017/11/5.
  */
 
-public class ProvinceListAdapter extends RecyclerView.Adapter<ViewHolder>{
+public class CountyListAdapter extends RecyclerView.Adapter<ViewHolder>{
     private View view;
     private ArrayList<Province> provinceList;
     private ProvinceViewHolder provinceViewHolder;
     private RxBus rxBus;
     private WeatherEvent weatherEvent;
-    private Province province;
 
     public void setProvinceListAdapter(ArrayList<Province> provinceList){
         this.provinceList=provinceList;
@@ -36,17 +35,14 @@ public class ProvinceListAdapter extends RecyclerView.Adapter<ViewHolder>{
 
         public ProvinceViewHolder(View view){
             super(view);
-            cardView=(CardView)view.findViewById(R.id.province_cardview_id);
+            cardView=(CardView)view.findViewById(R.id.county_cardview_id);
             textView=(TextView)view.findViewById(R.id.province_name);
             cardView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view){
-            province=new Province();
-            province.setId(id);
-            province.setName(textView.getText()+"");
-            weatherEvent=new WeatherEvent(WeatherEvent.Type.GOTO_WEATHER_CITY,0,province);
+            weatherEvent=new WeatherEvent(WeatherEvent.Type.GOTO_WEATHER_CITY,id,null);
             if(rxBus.hasObservers()){
                 rxBus.send(weatherEvent);
             }
