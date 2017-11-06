@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import com.xiaofan.www.weather.MainActivity;
 import com.xiaofan.www.weather.fragment.CityFragment;
+import com.xiaofan.www.weather.fragment.CountyFragment;
+import com.xiaofan.www.weather.model.City;
 import com.xiaofan.www.weather.model.Province;
 
 import rx.Subscription;
@@ -24,6 +26,10 @@ public class Presenter {
     private Context context;
     private MainActivity mainActivity;
     private Subscription subscription;
+    private String province_id;
+    private String city_id;
+    private Object object;
+    private int[] ids= new int[]{1,2,3,4,5,6};
 
     public Presenter(Context context){
         this.context=context;
@@ -41,11 +47,44 @@ public class Presenter {
                             if (event instanceof WeatherEvent) {
                                 WeatherEvent e=(WeatherEvent)event;
                                 if(e.getType()==WeatherEvent.Type.GOTO_WEATHER_CITY) {
-                                    Province province=(Province)e.getObject();
-                                    CityFragment cityFragment=new CityFragment();
-                                    cityFragment.setCityId(province.getId()+"");
-                                    cityFragment.setCityName(province.getName());
-                                    mainActivity.replaceFragmnet(cityFragment);
+                                    object=e.getObject();
+                                    if(object instanceof Province){
+                                        Province province=(Province)object;
+                                        province_id=province.getId()+"";
+
+                                        boolean flag=false;
+                                        for (int id:ids) {
+                                            if(id==province.getId()){
+                                                flag=true;
+                                            }
+                                        }
+
+                                       if(flag){
+                                           CountyFragment countyFragment=new CountyFragment();
+                                           countyFragment.setCityId(province_id);
+                                           countyFragment.setCityName(province.getName());
+                                           countyFragment.setProvinceId(province_id);
+                                           mainActivity.replaceFragmnet(countyFragment);
+                                       }else{
+                                           CityFragment cityFragment=new CityFragment();
+                                           cityFragment.setProvinceId(province_id);
+                                           cityFragment.setProvinceName(province.getName());
+                                           mainActivity.replaceFragmnet(cityFragment);
+                                       }
+                                    }
+
+                                }else if(e.getType()==WeatherEvent.Type.GOTO_WEATHER_COUNTY){
+                                    object=e.getObject();
+                                    if(object instanceof City){
+                                        City city=(City) object;
+                                        CountyFragment countyFragment=new CountyFragment();
+                                        city_id=city.getId()+"";
+                                        countyFragment.setCityId(city_id);
+                                        countyFragment.setCityName(city.getName());
+                                        countyFragment.setProvinceId(province_id);
+                                        mainActivity.replaceFragmnet(countyFragment);
+                                    }
+
                                 }
                             }
                         }
@@ -54,8 +93,6 @@ public class Presenter {
             subscription=null;
         }
     }
-
-
 
     public Subscription getSubscription(){
         return subscription;

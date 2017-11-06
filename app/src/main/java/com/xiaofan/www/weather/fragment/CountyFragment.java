@@ -18,8 +18,10 @@ import com.google.gson.Gson;
 import com.xiaofan.www.weather.MainActivity;
 import com.xiaofan.www.weather.R;
 import com.xiaofan.www.weather.adapter.CityListAdapter;
+import com.xiaofan.www.weather.adapter.CountyListAdapter;
 import com.xiaofan.www.weather.common.RestClient;
 import com.xiaofan.www.weather.model.City;
+import com.xiaofan.www.weather.model.County;
 
 import java.util.ArrayList;
 
@@ -30,29 +32,34 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CityFragment extends Fragment {
+public class CountyFragment extends Fragment {
     private View view;
     private MainActivity mainActivity;
-    private ArrayList<City> cityList;
+    private ArrayList<County> countyList;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
-    private CityListAdapter adapter;
+    private CountyListAdapter adapter;
     private ProgressBar progressBar;
     private LinearLayout progress_wrap;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private String city_id;
     private String province_id;
-    private String province_name;
+    private String city_name;
 
-    public CityFragment() {
+    public CountyFragment() {
         // Required empty public constructor
+    }
+
+    public void setCityId(String city_id){
+        this.city_id=city_id;
     }
 
     public void setProvinceId(String province_id){
         this.province_id=province_id;
     }
 
-    public void setProvinceName(String province_name){
-        this.province_name=province_name;
+    public void setCityName(String city_name){
+        this.city_name=city_name;
     }
 
     @Override
@@ -62,7 +69,7 @@ public class CityFragment extends Fragment {
         mainActivity=(MainActivity) getActivity();
         mainActivity.toolbar.setTitle("");
         mainActivity.toolbar.setTitleTextColor(Color.WHITE);
-        mainActivity.title.setText(province_name);
+        mainActivity.title.setText(city_name);
 
         progress_wrap=(LinearLayout)view.findViewById(R.id.progress_wrap);
         progress_wrap.setVisibility(View.VISIBLE);
@@ -80,8 +87,8 @@ public class CityFragment extends Fragment {
         recyclerView=(RecyclerView)view.findViewById(R.id.recycler_view);
         layoutManager=new LinearLayoutManager(mainActivity);
         recyclerView.setLayoutManager(layoutManager);
-        adapter=new CityListAdapter();
-        adapter.setCityListAdapter(new ArrayList<City>());
+        adapter=new CountyListAdapter();
+        adapter.setCountyListAdapter(new ArrayList<County>());
         recyclerView.setAdapter(adapter);
 
         flushData();
@@ -91,20 +98,20 @@ public class CityFragment extends Fragment {
     public void flushData(){
         String url=mainActivity.getResources().getString(R.string.api_url);
         RestClient client= RestClient.getDedault(url);
-        Call<ArrayList<City>> call=client.getCityList(province_id);
-        call.enqueue(new Callback<ArrayList<City>>(){
+        Call<ArrayList<County>> call=client.getCountyList(province_id,city_id);
+        call.enqueue(new Callback<ArrayList<County>>(){
             @Override
-            public void onResponse(Call<ArrayList<City>> call, Response<ArrayList<City>> response){
+            public void onResponse(Call<ArrayList<County>> call, Response<ArrayList<County>> response){
                 try{
                     int code=response.code();
                     switch (code){
                         case 200:
                             Gson gson=new Gson();
-                            Log.d("City:",gson.toJson(call.request()));
-                            Log.d("City:",response.headers().toString());
-                            Log.d("City:",gson.toJson(response.body()));
-                            cityList=response.body();
-                            adapter.setCityListAdapter(cityList);
+                            Log.d("County:",gson.toJson(call.request()));
+                            Log.d("County:",response.headers().toString());
+                            Log.d("County:",gson.toJson(response.body()));
+                            countyList=response.body();
+                            adapter.setCountyListAdapter(countyList);
                             recyclerView.setAdapter(adapter);
                             break;
                     }
@@ -115,7 +122,7 @@ public class CityFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<City>> call,Throwable t){
+            public void onFailure(Call<ArrayList<County>> call,Throwable t){
                 t.printStackTrace();
             }
         });

@@ -28,6 +28,7 @@ public class ProvinceListAdapter extends RecyclerView.Adapter<ViewHolder>{
 
     public void setProvinceListAdapter(ArrayList<Province> provinceList){
         this.provinceList=provinceList;
+        province=new Province();
     }
     public class ProvinceViewHolder extends ViewHolder implements View.OnClickListener{
         private CardView cardView;
@@ -43,7 +44,6 @@ public class ProvinceListAdapter extends RecyclerView.Adapter<ViewHolder>{
 
         @Override
         public void onClick(View view){
-            province=new Province();
             province.setId(id);
             province.setName(textView.getText()+"");
             weatherEvent=new WeatherEvent(WeatherEvent.Type.GOTO_WEATHER_CITY,0,province);

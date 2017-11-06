@@ -11,4 +11,7 @@ public class County {
     public int getId(){return id;}
     public String getName(){return name;}
     public String getWeatherId(){return weather_id;}
+    public void setId(int id){this.id=id;}
+    public void setName(String name){this.name=name;}
+    public void setWeatherId(String weather_id){this.weather_id=weather_id;}
 }

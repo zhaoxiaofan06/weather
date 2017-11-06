@@ -21,7 +21,7 @@ public interface ServiceInterface {
     @GET("china/{id}")
     Call<ArrayList<City>> getCityList(@Path("id") String id);
 
-    @GET("china/{id}/{pid}")
-    Call<ArrayList<County>> getCountyList(@Path("id") String id,@Path("pid") String pid);
+    @GET("china/{pid}/{id}")
+    Call<ArrayList<County>> getCountyList(@Path("pid") String pid,@Path("id") String id);
 }
 

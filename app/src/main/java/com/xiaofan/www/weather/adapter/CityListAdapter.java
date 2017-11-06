@@ -11,7 +11,6 @@ import com.xiaofan.www.weather.R;
 import com.xiaofan.www.weather.common.RxBus;
 import com.xiaofan.www.weather.common.WeatherEvent;
 import com.xiaofan.www.weather.model.City;
-import com.xiaofan.www.weather.model.Province;
 
 import java.util.ArrayList;
 
@@ -25,9 +24,11 @@ public class CityListAdapter extends RecyclerView.Adapter<ViewHolder>{
     private CityViewHolder cityViewHolder;
     private RxBus rxBus;
     private WeatherEvent weatherEvent;
+    private City city;
 
     public void setCityListAdapter(ArrayList<City> cityList){
         this.cityList=cityList;
+        city=new City();
     }
     public class CityViewHolder extends ViewHolder implements View.OnClickListener{
         private CardView cardView;
@@ -43,7 +44,9 @@ public class CityListAdapter extends RecyclerView.Adapter<ViewHolder>{
 
         @Override
         public void onClick(View view){
-            weatherEvent=new WeatherEvent(WeatherEvent.Type.GOTO_WEATHER_COUNTY,id,null);
+            city.setId(id);
+            city.setName(textView.getText()+"");
+            weatherEvent=new WeatherEvent(WeatherEvent.Type.GOTO_WEATHER_COUNTY,0,city);
             if(rxBus.hasObservers()){
                 rxBus.send(weatherEvent);
             }
