@@ -5,14 +5,25 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xiaofan.www.weather.common.Presenter;
 import com.xiaofan.www.weather.common.RxBus;
 import com.xiaofan.www.weather.fragment.ProvinceFragment;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+
 import rx.subscriptions.CompositeSubscription;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
     public RxBus rxBus;
     public CompositeSubscription subscription;
     public Presenter presenter;
+    public ViewPager viewPager;
+    public List<View> viewList;
+    public LinearLayout linearLayout;
+    public int currentItem;
+    public Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     public void init(){
         toolbar=(Toolbar)findViewById(R.id.main_toolbar);
         title=(TextView)findViewById(R.id.text_toolbar);
+        viewPager=(ViewPager)findViewById(R.id.view_page_main);
+        linearLayout=(LinearLayout)findViewById(R.id.fragment_id);
+        //linearLayout.setVisibility(View.GONE);
 
         rxBus=RxBus.getDefault();
         presenter=new Presenter(this);
@@ -42,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         presenter.setSubscription();
+        presenter.setViewPager();
         subscription=new CompositeSubscription();
         subscription.add(presenter.getSubscription());
     }

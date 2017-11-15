@@ -69,6 +69,13 @@ public class CountyFragment extends Fragment {
         mainActivity=(MainActivity) getActivity();
         mainActivity.toolbar.setTitle("");
         mainActivity.toolbar.setTitleTextColor(Color.WHITE);
+        mainActivity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        mainActivity.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivity.onBackPressed();
+            }
+        });
         mainActivity.title.setText(city_name);
 
         progress_wrap=(LinearLayout)view.findViewById(R.id.progress_wrap);
@@ -98,6 +105,9 @@ public class CountyFragment extends Fragment {
     public void flushData(){
         String url=mainActivity.getResources().getString(R.string.api_url);
         RestClient client= RestClient.getDedault(url);
+        if(!client.getApiUrl().equals(url)){
+            client.setDefault(url);
+        }
         Call<ArrayList<County>> call=client.getCountyList(province_id,city_id);
         call.enqueue(new Callback<ArrayList<County>>(){
             @Override
@@ -106,10 +116,10 @@ public class CountyFragment extends Fragment {
                     int code=response.code();
                     switch (code){
                         case 200:
-                            Gson gson=new Gson();
-                            Log.d("County:",gson.toJson(call.request()));
-                            Log.d("County:",response.headers().toString());
-                            Log.d("County:",gson.toJson(response.body()));
+                            //Gson gson=new Gson();
+                            //Log.d("County:",gson.toJson(call.request()));
+                            //Log.d("County:",response.headers().toString());
+                            //Log.d("County:",gson.toJson(response.body()));
                             countyList=response.body();
                             adapter.setCountyListAdapter(countyList);
                             recyclerView.setAdapter(adapter);

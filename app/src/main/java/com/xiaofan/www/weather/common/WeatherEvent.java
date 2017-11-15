@@ -9,7 +9,8 @@ public class WeatherEvent extends AbstractEvent {
     {
         GOTO_WEATHER_PROVINCE,
         GOTO_WEATHER_CITY,
-        GOTO_WEATHER_COUNTY
+        GOTO_WEATHER_COUNTY,
+        GOTO_WEATHER_DETAIL
     }
 
     private int _resultCode;

@@ -50,7 +50,7 @@ public class CountyListAdapter extends RecyclerView.Adapter<ViewHolder>{
             county.setId(id);
             county.setName(textView.getText()+"");
             county.setWeatherId(weather_id);
-            weatherEvent=new WeatherEvent(WeatherEvent.Type.GOTO_WEATHER_CITY,0,county);
+            weatherEvent=new WeatherEvent(WeatherEvent.Type.GOTO_WEATHER_DETAIL,0,county);
             if(rxBus.hasObservers()){
                 rxBus.send(weatherEvent);
             }

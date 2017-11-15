@@ -51,6 +51,7 @@ public class ProvinceFragment extends Fragment {
         mainActivity=(MainActivity) getActivity();
         mainActivity.toolbar.setTitle("");
         mainActivity.toolbar.setTitleTextColor(Color.WHITE);
+        mainActivity.toolbar.setNavigationIcon(null);
         mainActivity.title.setText("中国");
 
         progress_wrap=(LinearLayout)view.findViewById(R.id.progress_wrap);
@@ -80,6 +81,9 @@ public class ProvinceFragment extends Fragment {
     public void flushData(){
         String url=mainActivity.getResources().getString(R.string.api_url);
         RestClient client= RestClient.getDedault(url);
+        if(!client.getApiUrl().equals(url)){
+            client.setDefault(url);
+        }
         Call<ArrayList<Province>> call=client.getProvinceList();
         call.enqueue(new Callback<ArrayList<Province>>(){
             @Override

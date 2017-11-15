@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">天气预报</string>
     <string name="api_url">http://guolin.tech/api/</string>
+    <string name="weather_api_url">https://free-api.heweather.com/</string>
+    <string name="weather_api_key">6715a9cf203b4964b1098b59555c0b67</string>
 </resources>

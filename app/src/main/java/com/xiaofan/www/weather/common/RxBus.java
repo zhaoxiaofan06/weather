@@ -19,8 +19,8 @@ public class RxBus {
         _bus.onNext(o);
     }
 
-    public Observable<Object> toObserverable() {
-        return _bus;
+    public Observable<WeatherEvent> toObserverable(Class<WeatherEvent> eventType) {
+        return _bus.ofType(eventType);
     }
 
     public boolean hasObservers() {

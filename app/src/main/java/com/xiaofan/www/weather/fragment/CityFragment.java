@@ -62,6 +62,13 @@ public class CityFragment extends Fragment {
         mainActivity=(MainActivity) getActivity();
         mainActivity.toolbar.setTitle("");
         mainActivity.toolbar.setTitleTextColor(Color.WHITE);
+        mainActivity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        mainActivity.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivity.onBackPressed();
+            }
+        });
         mainActivity.title.setText(province_name);
 
         progress_wrap=(LinearLayout)view.findViewById(R.id.progress_wrap);
@@ -91,6 +98,9 @@ public class CityFragment extends Fragment {
     public void flushData(){
         String url=mainActivity.getResources().getString(R.string.api_url);
         RestClient client= RestClient.getDedault(url);
+        if(!client.getApiUrl().equals(url)){
+            client.setDefault(url);
+        }
         Call<ArrayList<City>> call=client.getCityList(province_id);
         call.enqueue(new Callback<ArrayList<City>>(){
             @Override
@@ -99,10 +109,10 @@ public class CityFragment extends Fragment {
                     int code=response.code();
                     switch (code){
                         case 200:
-                            Gson gson=new Gson();
-                            Log.d("City:",gson.toJson(call.request()));
-                            Log.d("City:",response.headers().toString());
-                            Log.d("City:",gson.toJson(response.body()));
+                            //Gson gson=new Gson();
+                            //Log.d("City:",gson.toJson(call.request()));
+                            //Log.d("City:",response.headers().toString());
+                            //Log.d("City:",gson.toJson(response.body()));
                             cityList=response.body();
                             adapter.setCityListAdapter(cityList);
                             recyclerView.setAdapter(adapter);
