@@ -6,26 +6,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
-import android.os.Message;
-import android.support.v4.view.PagerAdapter;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.xiaofan.www.weather.MainActivity;
-import com.xiaofan.www.weather.R;
 import com.xiaofan.www.weather.fragment.CityFragment;
 import com.xiaofan.www.weather.fragment.CountyFragment;
 import com.xiaofan.www.weather.fragment.WeatherFragment;
 import com.xiaofan.www.weather.model.City;
 import com.xiaofan.www.weather.model.County;
 import com.xiaofan.www.weather.model.Province;
-
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -150,87 +138,5 @@ public class Presenter {
         AlertDialog alert = builder.create();
         alert.setCancelable(false);
         alert.show();
-    }
-
-    public void setViewPager(){
-        LayoutInflater inflater=mainActivity.getLayoutInflater();
-        View view1=inflater.inflate(R.layout.layout1, null);
-        View view2=inflater.inflate(R.layout.layout2, null);
-        View view3=inflater.inflate(R.layout.layout3, null);
-        ImageView imageView=new ImageView(mainActivity);
-        imageView.setImageResource(R.drawable.ic_arrow_back_white_24dp);
-
-        view1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(mainActivity,"测试1被点击"+mainActivity.currentItem,Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        view2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(mainActivity,"测试2被点击"+mainActivity.currentItem,Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        view3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(mainActivity,"测试3被点击"+mainActivity.currentItem,Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        mainActivity.viewList=new ArrayList<View>();
-        mainActivity.viewList.add(view1);
-        mainActivity.viewList.add(view2);
-        mainActivity.viewList.add(view3);
-
-        mainActivity.viewPager.setAdapter(new PagerAdapter() {
-            @Override
-            public int getCount() {
-                return mainActivity.viewList.size();
-            }
-
-            @Override
-            public boolean isViewFromObject(View view, Object object) {
-                return view==object;
-            }
-
-            @Override
-            public void destroyItem(ViewGroup container, int position,
-                                    Object object) {
-                // TODO Auto-generated method stub
-                container.removeView(mainActivity.viewList.get(position));
-            }
-
-            @Override
-            public Object instantiateItem(ViewGroup container, int position) {
-                // TODO Auto-generated method stub
-                container.addView(mainActivity.viewList.get(position));
-
-
-                return mainActivity.viewList.get(position);
-            }
-        });
-
-        handler=new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                mainActivity.currentItem=msg.what;
-                if(mainActivity.currentItem==mainActivity.viewList.size()){
-                    mainActivity.currentItem=0;
-                }
-                mainActivity.viewPager.setCurrentItem(mainActivity.currentItem);
-            }
-        };
-
-        mainActivity.timer=new Timer();
-        mainActivity.timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.sendEmptyMessage(++mainActivity.currentItem);
-            }
-        },1000,5000);
     }
 }

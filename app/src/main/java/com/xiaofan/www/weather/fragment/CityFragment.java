@@ -70,6 +70,7 @@ public class CityFragment extends Fragment {
             }
         });
         mainActivity.title.setText(province_name);
+        mainActivity.timer.cancel();
 
         progress_wrap=(LinearLayout)view.findViewById(R.id.progress_wrap);
         progress_wrap.setVisibility(View.VISIBLE);

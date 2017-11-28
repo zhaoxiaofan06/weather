@@ -32,10 +32,6 @@ public class MainActivity extends AppCompatActivity {
     public RxBus rxBus;
     public CompositeSubscription subscription;
     public Presenter presenter;
-    public ViewPager viewPager;
-    public List<View> viewList;
-    public LinearLayout linearLayout;
-    public int currentItem;
     public Timer timer;
 
     @Override
@@ -48,9 +44,6 @@ public class MainActivity extends AppCompatActivity {
     public void init(){
         toolbar=(Toolbar)findViewById(R.id.main_toolbar);
         title=(TextView)findViewById(R.id.text_toolbar);
-        viewPager=(ViewPager)findViewById(R.id.view_page_main);
-        linearLayout=(LinearLayout)findViewById(R.id.fragment_id);
-        //linearLayout.setVisibility(View.GONE);
 
         rxBus=RxBus.getDefault();
         presenter=new Presenter(this);
@@ -61,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         presenter.setSubscription();
-        presenter.setViewPager();
         subscription=new CompositeSubscription();
         subscription.add(presenter.getSubscription());
     }

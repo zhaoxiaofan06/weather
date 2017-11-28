@@ -7,9 +7,14 @@ android {
         applicationId "com.xiaofan.www.weather"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 1010001
+        versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "arm64-v8a", "x86_64"
+            //abiFilters "armeabi"
+        }
     }
     buildTypes {
         release {
@@ -24,6 +29,17 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile('com.android.support:support-v4:25.3.1') {
+        force = true
+    }
+
+    compile files('libs/AMap_Location_V3.6.0_20170918.jar')
+    compile files('libs/AMap_Search_V5.3.1_20170817.jar')
+    //compile files('libs/Android_Map3D_SDK_V5.4.0_20170928.jar')
+    compile files('libs/Volley.jar')
+    compile files('libs/AMap3DMap_5.4.0_AMapNavi_5.4.0_20170929.jar')
+    compile files('libs/Msc.jar')
+
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:25.3.1'
@@ -44,5 +60,6 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     compile 'com.squareup.okhttp3:okhttp-urlconnection:3.6.0'
     compile 'de.hdodenhof:circleimageview:2.2.0'
+    compile 'me.relex:circleindicator:1.2.2@aar'
     testCompile 'junit:junit:4.12'
 }
