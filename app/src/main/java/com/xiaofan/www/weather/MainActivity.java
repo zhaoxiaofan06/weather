@@ -15,12 +15,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.xiaofan.www.weather.common.Presenter;
 import com.xiaofan.www.weather.common.RxBus;
 import com.xiaofan.www.weather.fragment.ProvinceFragment;
@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this,item.getTitle(),Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_scan:
+                        //Intent intent1=new Intent(MainActivity.this, CaptureActivity.class);
+                        //startActivityForResult(intent1,SCAN_CODE);
                         IntentIntegrator intentIntegrator=new IntentIntegrator(MainActivity.this);
                         intentIntegrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
                         break;
@@ -138,5 +140,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Toast.makeText(MainActivity.this,"退出成功",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
+        if(intentResult != null) {
+            if(intentResult.getContents() == null) {
+                Toast.makeText(this,"内容为空",Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this,intentResult.getContents(),Toast.LENGTH_LONG).show();
+            }
+        } else {
+            super.onActivityResult(requestCode,resultCode,data);
+        }
     }
 }
