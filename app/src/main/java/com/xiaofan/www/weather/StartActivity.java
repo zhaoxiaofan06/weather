@@ -32,7 +32,7 @@ public class StartActivity extends AppCompatActivity{
     private List<ImageView> imageList;
     private List<ImageView> indicatorList;
     private Handler handler;
-    public int currentItem;
+    public int currentItem=0;
     private Timer timer;
     private LinearLayout linearLayout;
     private TextView textView;
@@ -138,49 +138,50 @@ public class StartActivity extends AppCompatActivity{
         if(provinces==null){
             getData();
         }
+        timer_holder=imageList.size();
+        textView.setText(timer_holder+"");
     }
 
     @Override
     public void onResume(){
         super.onResume();
-
-        timer_holder=imageList.size();
-        textView.setText(timer_holder+"");
-
-        handler=new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                currentItem=msg.what;
-                if(currentItem==imageList.size()){
-                    currentItem=0;
+        if(currentItem==imageList.size()){
+            Intent intent=new Intent(StartActivity.this,MainActivity.class);
+            startActivity(intent);
+        }else{
+            handler=new Handler(){
+                @Override
+                public void handleMessage(Message msg) {
+                    currentItem=msg.what;
+                    if(currentItem==imageList.size()){
+                        currentItem=0;
+                    }
+                    viewPager.setCurrentItem(currentItem);
+                    textView.setText(timer_holder+"");
                 }
-                viewPager.setCurrentItem(currentItem);
-                textView.setText(timer_holder+"");
-            }
-        };
+            };
 
-        timer=new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                --timer_holder;
-                int number=++currentItem;
-                handler.sendEmptyMessage(number);
-
-                if(number<imageList.size()){
-                    handler.sendEmptyMessage(number);
-                }else{
-                    timer.cancel();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent intent=new Intent(StartActivity.this,MainActivity.class);
-                            startActivity(intent);
-                        }
-                    },500);
+            timer=new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    --timer_holder;
+                    int number=++currentItem;
+                    if(number<imageList.size()){
+                        handler.sendEmptyMessage(number);
+                    }else{
+                        timer.cancel();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent=new Intent(StartActivity.this,MainActivity.class);
+                                startActivity(intent);
+                            }
+                        },500);
+                    }
                 }
-            }
-        },3000,3000);
+            },3000,3000);
+        }
     }
 
 

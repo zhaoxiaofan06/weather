@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -31,7 +32,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import me.relex.circleindicator.CircleIndicator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,7 +53,6 @@ public class ProvinceFragment extends Fragment {
     private ViewPager viewPager;
     private ArrayList<View> viewList;
     public int currentItem;
-    public CircleIndicator indicator;
 
 
     public ProvinceFragment() {
@@ -66,7 +65,6 @@ public class ProvinceFragment extends Fragment {
         view=inflater.inflate(R.layout.home_item_list, container, false);
         mainActivity=(MainActivity) getActivity();
         viewPager=(ViewPager)view.findViewById(R.id.view_page_main);
-        indicator=(CircleIndicator)view.findViewById(R.id.indicator_id);
 
         View view1=inflater.inflate(R.layout.layout1, null);
         View view2=inflater.inflate(R.layout.layout2, null);
@@ -168,7 +166,13 @@ public class ProvinceFragment extends Fragment {
 
         mainActivity.toolbar.setTitle("");
         mainActivity.toolbar.setTitleTextColor(Color.WHITE);
-        mainActivity.toolbar.setNavigationIcon(null);
+        mainActivity.toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
+        mainActivity.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivity.drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
         mainActivity.title.setText("中国");
 
         progress_wrap=(LinearLayout)view.findViewById(R.id.progress_wrap);
