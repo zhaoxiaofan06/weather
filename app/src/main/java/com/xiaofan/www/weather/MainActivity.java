@@ -15,7 +15,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     public Timer timer;
     public DrawerLayout drawerLayout;
     public NavigationView navigationView;
+    public Menu menu;
+    public Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void init(){
         toolbar=(Toolbar)findViewById(R.id.main_toolbar);
+        menu=toolbar.getMenu();
+        getMenuInflater().inflate(R.menu.toolbar,menu);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int id=item.getItemId();
+                return true;
+            }
+        });
+
         title=(TextView)findViewById(R.id.text_toolbar);
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         navigationView=(NavigationView)findViewById(R.id.nav_view);

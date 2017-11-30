@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/more_scan"
+        android:icon="@drawable/scan"
+        android:title="扫描"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/more_camera"
+        android:icon="@drawable/camera"
+        android:title="拍照"
+        app:showAsAction="never" />
+</menu>

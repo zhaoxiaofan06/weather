@@ -3,6 +3,7 @@ package com.xiaofan.www.weather.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.transition.Visibility;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -69,7 +70,7 @@ public class CountyFragment extends Fragment {
         mainActivity=(MainActivity) getActivity();
         mainActivity.toolbar.setTitle("");
         mainActivity.toolbar.setTitleTextColor(Color.WHITE);
-        mainActivity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        mainActivity.toolbar.setNavigationIcon(R.drawable.back_write_32);
         mainActivity.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +78,7 @@ public class CountyFragment extends Fragment {
             }
         });
         mainActivity.title.setText(city_name);
+        mainActivity.menu.findItem(R.id.more).setVisible(false);
 
         progress_wrap=(LinearLayout)view.findViewById(R.id.progress_wrap);
         progress_wrap.setVisibility(View.VISIBLE);

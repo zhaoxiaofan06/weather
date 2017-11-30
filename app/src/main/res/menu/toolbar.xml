@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/more"
+        android:icon="@drawable/more_write_24"
+        android:title="更多"
+        app:showAsAction="ifRoom|collapseActionView">
+        <menu>
+            <item
+                android:id="@+id/more_scan"
+                android:icon="@drawable/scan_write_24"
+                android:title="扫描"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/more_camera"
+                android:icon="@drawable/camera_write_24"
+                android:title="拍照"
+                app:showAsAction="never" />
+        </menu>
+    </item>
+</menu>

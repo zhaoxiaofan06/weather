@@ -15,10 +15,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.xiaofan.www.weather.MainActivity;
 import com.xiaofan.www.weather.R;
@@ -69,8 +67,6 @@ public class ProvinceFragment extends Fragment {
         View view1=inflater.inflate(R.layout.layout1, null);
         View view2=inflater.inflate(R.layout.layout2, null);
         View view3=inflater.inflate(R.layout.layout3, null);
-        ImageView imageView=new ImageView(mainActivity);
-        imageView.setImageResource(R.drawable.ic_arrow_back_white_24dp);
 
         view1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +130,7 @@ public class ProvinceFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-                viewList.get(position).setBackgroundResource(R.drawable.ic_mood_black_18dp);
+                //viewList.get(position).setBackgroundResource(R.drawable.ic_mood_black_18dp);
                 //Toast.makeText(mainActivity, position+"被选择了", Toast.LENGTH_SHORT).show();
             }
 
@@ -166,7 +162,7 @@ public class ProvinceFragment extends Fragment {
 
         mainActivity.toolbar.setTitle("");
         mainActivity.toolbar.setTitleTextColor(Color.WHITE);
-        mainActivity.toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
+        mainActivity.toolbar.setNavigationIcon(R.drawable.menu_write_32);
         mainActivity.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,6 +170,7 @@ public class ProvinceFragment extends Fragment {
             }
         });
         mainActivity.title.setText("中国");
+        mainActivity.menu.findItem(R.id.more).setVisible(true);
 
         progress_wrap=(LinearLayout)view.findViewById(R.id.progress_wrap);
         progress_wrap.setVisibility(View.VISIBLE);

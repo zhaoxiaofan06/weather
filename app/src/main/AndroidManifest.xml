@@ -34,7 +34,9 @@
         <service android:name="com.amap.api.location.APSService" />
 
         <activity android:name=".MainActivity"></activity>
-        <activity android:name=".StartActivity">
+        <activity
+            android:name=".StartActivity"
+            android:theme="@style/WelcomeStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -66,7 +66,7 @@ public class WeatherFragment extends Fragment {
         mainActivity=(MainActivity)getActivity();
         mainActivity.toolbar.setTitle("");
         mainActivity.toolbar.setTitleTextColor(Color.WHITE);
-        mainActivity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        mainActivity.toolbar.setNavigationIcon(R.drawable.back_write_32);
         mainActivity.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +74,7 @@ public class WeatherFragment extends Fragment {
             }
         });
         mainActivity.title.setText(city_name);
+        mainActivity.menu.findItem(R.id.more).setVisible(false);
 
         flushData();
         //Log.d("Weather",city_name);

@@ -58,10 +58,10 @@ public class StartActivity extends AppCompatActivity{
             ImageView imageView=new ImageView(this);
             LinearLayout.LayoutParams params=
                     new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
-            params.leftMargin=10;
-            params.rightMargin=10;
-            params.height=15;
-            params.width=15;
+            params.leftMargin=5;
+            params.rightMargin=5;
+            //params.height=60;
+            //params.width=60;
 
             if(i==0){
                 imageView.setImageResource(R.drawable.start1);
@@ -74,9 +74,9 @@ public class StartActivity extends AppCompatActivity{
 
             ImageView circleImage=new ImageView(this);
             if(i==0){
-                circleImage.setImageResource(R.drawable.ic_brightness_1_gray_18dp);
+                circleImage.setImageResource(R.drawable.line_arrow_up_gray_24);
             }else{
-                circleImage.setImageResource(R.drawable.ic_brightness_1_white_18dp);
+                circleImage.setImageResource(R.drawable.line_write_24);
             }
             linearLayout.addView(circleImage,params);
             indicatorList.add(circleImage);
@@ -121,9 +121,9 @@ public class StartActivity extends AppCompatActivity{
                 int size=indicatorList.size();
                 for (int i=0;i<size;i++){
                     if(i==(position % size)){
-                        indicatorList.get(i).setImageResource(R.drawable.ic_brightness_1_gray_18dp);
+                        indicatorList.get(i).setImageResource(R.drawable.line_arrow_up_gray_24);
                     }else{
-                        indicatorList.get(i).setImageResource(R.drawable.ic_brightness_1_white_18dp);
+                        indicatorList.get(i).setImageResource(R.drawable.line_write_24);
                     }
                 }
             }
