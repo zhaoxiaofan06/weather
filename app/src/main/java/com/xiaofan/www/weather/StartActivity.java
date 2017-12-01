@@ -176,6 +176,7 @@ public class StartActivity extends AppCompatActivity{
                             public void run() {
                                 Intent intent=new Intent(StartActivity.this,MainActivity.class);
                                 startActivity(intent);
+                                imageList.clear();
                             }
                         },500);
                     }

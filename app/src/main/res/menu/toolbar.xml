@@ -13,7 +13,6 @@
                 android:icon="@drawable/scan_write_24"
                 android:title="扫描"
                 app:showAsAction="never" />
-
             <item
                 android:id="@+id/more_camera"
                 android:icon="@drawable/camera_write_24"

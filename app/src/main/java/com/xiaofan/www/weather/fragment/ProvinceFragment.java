@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
@@ -49,7 +50,7 @@ public class ProvinceFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private Handler handler;
     private ViewPager viewPager;
-    private ArrayList<View> viewList;
+    private ArrayList<ImageView> viewList;
     public int currentItem;
 
 
@@ -64,35 +65,18 @@ public class ProvinceFragment extends Fragment {
         mainActivity=(MainActivity) getActivity();
         viewPager=(ViewPager)view.findViewById(R.id.view_page_main);
 
-        View view1=inflater.inflate(R.layout.layout1, null);
-        View view2=inflater.inflate(R.layout.layout2, null);
-        View view3=inflater.inflate(R.layout.layout3, null);
-
-        view1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(mainActivity,"测试1被点击"+mainActivity.currentItem,Toast.LENGTH_SHORT).show();
+        viewList=new ArrayList<ImageView>();
+        for (int i=0;i<3;i++){
+            ImageView imageView=new ImageView(mainActivity);
+            if(i==0){
+                imageView.setImageResource(R.mipmap.weather_pic1);
+            }else if(i==1){
+                imageView.setImageResource(R.mipmap.weather_pic2);
+            }else if(i==2){
+                imageView.setImageResource(R.mipmap.weather_pic3);
             }
-        });
-
-        view2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(mainActivity,"测试2被点击"+mainActivity.currentItem,Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        view3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(mainActivity,"测试3被点击"+mainActivity.currentItem,Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        viewList=new ArrayList<View>();
-        viewList.add(view1);
-        viewList.add(view2);
-        viewList.add(view3);
+            viewList.add(imageView);
+        }
 
         viewPager.setAdapter(new PagerAdapter() {
             @Override
